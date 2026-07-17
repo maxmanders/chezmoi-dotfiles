@@ -1,0 +1,70 @@
+[color]
+	branch = auto
+	diff = auto
+	status = auto
+	ui = auto
+[color "branch"]
+	current = yellow reverse
+	local = yellow 
+	remote = green
+[color "diff"]
+	meta = yellow bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
+[color "status"]
+	added = yellow
+	changed = green
+	untracked = cyan
+[alias]
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
+	ctags = !.git/hooks/ctags
+	co = checkout
+	ci = commit
+	st = status
+	br = branch
+	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+	type = cat-file -t
+	dump = cat-file -p
+	d = difftool
+	find = log -i --pretty=\"format:%Cgreen%H $Cblue%cd %Cblue%s\" --name-status --grep
+	pr = pull-request
+[init]
+	templatedir = ~/.git_template
+	defaultBranch = main
+[core]
+	excludesFile = ~/.gitignore
+	commentchar = ';'
+	pager = delta
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	required = true
+	process = git-lfs filter-process
+[credential]
+	helper = osxkeychain
+[push]
+	default = simple
+	autoSetupRemote = true
+[commit]
+	gpgsign = true
+[user]
+	signingkey = 261AEB99C6A07A58
+	email = max@maxmanders.co.uk
+	name = Max Manders
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true
+[merge]
+	conflictStyle = zdiff3
+[credential "https://github.com"]
+	helper = 
+	helper = !gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !gh auth git-credential
