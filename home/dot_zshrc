@@ -107,7 +107,6 @@ complete -C terragrunt terragrunt
 zinit ice wait'0' lucid;  zinit snippet OMZL::completion.zsh
 zinit ice wait'0a' lucid; zinit snippet OMZL::clipboard.zsh
 zinit ice wait'0b' lucid; zinit snippet OMZL::spectrum.zsh
-zinit ice wait'0c' lucid; zinit snippet OMZP::aws
 zinit ice wait'1' lucid;  zinit snippet OMZP::colored-man-pages
 zinit ice wait'1a' lucid; zinit snippet OMZP::docker
 zinit ice wait'1b' lucid; zinit snippet OMZP::github
