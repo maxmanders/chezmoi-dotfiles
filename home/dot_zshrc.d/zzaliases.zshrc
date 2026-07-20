@@ -3,7 +3,6 @@
 alias assume=". assume"
 alias awswhoami="aws sts get-caller-identity" 
 alias be="bundle exec"
-alias brew_upgrade="brew update && brew upgrade $(brew outdated)"
 alias cd="z"
 alias cx="kubectx"
 alias cz="chezmoi"

@@ -1,8 +1,12 @@
 # Deduplicate PATH entries
 typeset -U path
 
-HOMEBREW_PREFIX=/opt/homebrew
-HOMEBREW_NO_AUTO_UPDATE=1
+export HOMEBREW_PREFIX=/opt/homebrew
+if [[ "$(uname)" == "Linux" ]]; then
+  export HOMEBREW_PREFIX=/home/linuxbrew/.linuxbrew
+fi
+
+export HOMEBREW_NO_AUTO_UPDATE=1
 
 ###############################################################################
 # zplug
@@ -50,10 +54,6 @@ zplug load
 ###############################################################################
 # includes
 ###############################################################################
-if [[ "$(uname)" == "Linux" ]]; then
-  HOMEBREW_PREFIX=/home/linuxbrew/.linuxbrew
-fi
-
 for f in ${HOME}/.zshrc.d/*.zshrc; do
   # shellcheck disable=SC1090
   source "${f}"
@@ -78,12 +78,8 @@ fi
 source ${HOMEBREW_PREFIX}/Caskroom/gcloud-cli/latest/google-cloud-sdk/completion.zsh.inc
 source ${HOMEBREW_PREFIX}/opt/python-argcomplete/share/bash-completion/completions/python-argcomplete
 
-autoload -Uz compinit && compinit -C
-
 complete -C aws_completer aws
 complete -C terragrunt terragrunt
-
-compdef -d git
 ###############################################################################
 
 
