@@ -4,7 +4,7 @@ tap "guessi/tap"
 tap "home-operations/tap"
 tap "kdash-rs/kdash"
 tap "terraform-linters/tap"
-tap "universal-ctags/universal-ctags"
+tap "universal-ctags/universal-ctags", trusted: true
 # C/C++ resolver library and DNS resolver utilities
 brew "adns"
 # Recompression utilities for .PNG, .MNG, .ZIP, and .GZ files
@@ -35,8 +35,6 @@ brew "asciinema"
 brew "ncurses"
 # Aquarium animation in ASCII art
 brew "asciiquarium"
-# Extendable version manager with support for Ruby, Node.js, Erlang & more
-brew "asdf"
 # Improved shell history for zsh, bash, fish and nushell
 brew "atuin"
 # Automatic configure script builder
@@ -161,6 +159,8 @@ brew "graphite2"
 brew "harfbuzz"
 # C/C++ and Java libraries for Unicode and globalization
 brew "icu4c@77"
+# Image format providing lossless and lossy compression for web images
+brew "webp"
 # TIFF library and utilities
 brew "libtiff"
 # Generic library support script
@@ -375,6 +375,8 @@ brew "media-info"
 brew "memcached"
 # CLI for Mermaid library
 brew "mermaid-cli"
+# Polyglot runtime manager (asdf rust clone)
+brew "mise"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.13"
 # Cross platform, open source .NET development framework
@@ -582,4 +584,3 @@ krew "pod-shell"
 krew "stern"
 krew "tail"
 krew "tree"
-npm "live-server"
