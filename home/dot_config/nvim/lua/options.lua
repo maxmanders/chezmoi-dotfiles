@@ -95,3 +95,6 @@ vim.api.nvim_create_autocmd("BufEnter", {
         api.tree.find_file({ buf = vim.fn.bufnr() })
     end,
 })
+
+-- Prepend mise shims to PATH
+vim.env.PATH = vim.env.HOME .. "/.local/share/mise/shims:" .. vim.env.PATH
