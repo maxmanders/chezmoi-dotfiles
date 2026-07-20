@@ -9,43 +9,66 @@ fi
 export HOMEBREW_NO_AUTO_UPDATE=1
 
 ###############################################################################
-# zplug
+# zinit
 ###############################################################################
-source ${HOME}/.zplug/init.zsh
-
-zplug "mafredri/zsh-async", from:"github"
-
-zplug "plugins/aws", from:"oh-my-zsh"
-zplug "plugins/colored-man-pages", from:"oh-my-zsh"
-zplug "plugins/docker", from:"oh-my-zsh"
-zplug "plugins/fd", from:"oh-my-zsh"
-zplug "plugins/git", from:"oh-my-zsh"
-zplug "plugins/github", from:"oh-my-zsh"
-zplug "plugins/gpg-agent", from:"oh-my-zsh"
-zplug "plugins/kubectl", from:"oh-my-zsh"
-zplug "plugins/pip", from:"oh-my-zsh"
-zplug "plugins/pipenv", from:"oh-my-zsh"
-zplug "plugins/ssh-agent", from:"oh-my-zsh"
-zplug "plugins/terraform", from:"oh-my-zsh"
-
-zplug "zsh-users/zsh-completions", from:"github"
-
-zplug "lib/clipboard", from:"oh-my-zsh"
-zplug "lib/compfix", from:"oh-my-zsh"
-zplug "lib/completion", from:"oh-my-zsh"
-zplug "lib/directories", from:"oh-my-zsh"
-zplug "lib/history", from:"oh-my-zsh"
-zplug "lib/key-bindings", from:"oh-my-zsh"
-zplug "lib/spectrum", from:"oh-my-zsh"
-
-if ! zplug check; then
-    printf "Install zplug plugins? [y/N]: "
-    # shellcheck disable=SC1091
-    if read -rq; then
-        echo; zplug install
-    fi
+if [[ ! -f ${HOME}/.local/share/zinit/zinit.git/zinit.zsh ]]; then
+  command mkdir -p "${HOME}/.local/share/zinit" && command chmod g-rwX "${HOME}/.local/share/zinit"
+  command git clone https://github.com/zdharma-continuum/zinit "${HOME}/.local/share/zinit/zinit.git"
 fi
-zplug load
+source "${HOME}/.local/share/zinit/zinit.git/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+###############################################################################
+
+
+###############################################################################
+# fpath (must be complete before compinit runs)
+###############################################################################
+fpath=(${HOME}/.zshrc.d/completions/ $fpath)
+fpath=(${HOMEBREW_PREFIX}/share/zsh/site-functions $fpath)
+
+if command -v assume >/dev/null 2>&1; then
+  fpath=(${HOME}/.granted/zsh_autocomplete/assume/ $fpath)
+fi
+
+if command -v granted >/dev/null 2>&1; then
+  fpath=(${HOME}/.granted/zsh_autocomplete/granted/ $fpath)
+fi
+
+zinit ice blockf
+zinit light zsh-users/zsh-completions
+###############################################################################
+
+
+###############################################################################
+# compinit — cheap once the dump is cached; see _zsh_eval_cache below for the
+# same pattern applied to other tools.
+###############################################################################
+mkdir -p "${HOME}/.cache/zsh"
+autoload -Uz compinit
+compinit -C -d "${HOME}/.cache/zsh/zcompdump"
+###############################################################################
+
+
+###############################################################################
+# oh-my-zsh: synchronous
+# (ssh-agent/gpg-agent export sockets other commands need right away;
+# key-bindings/history/directories affect the very first keystroke/command;
+# git loads here too since its aliases — ggpull etc. — get used immediately
+# after opening a shell often enough that a few seconds of turbo delay is a
+# real, noticeable regression, not just a theoretical one. OMZL::git.zsh must
+# load *before* the git plugin — the plugin calls git_current_branch (defined
+# there) 14 times; without it, ggpull/gup and friends fail with
+# "command not found: git_current_branch")
+###############################################################################
+zinit snippet OMZL::key-bindings.zsh
+zinit snippet OMZL::history.zsh
+zinit snippet OMZL::directories.zsh
+zinit snippet OMZL::compfix.zsh
+zinit snippet OMZP::ssh-agent
+zinit snippet OMZP::gpg-agent
+zinit snippet OMZL::git.zsh
+zinit snippet OMZP::git
 ###############################################################################
 
 
@@ -60,24 +83,37 @@ done
 
 
 ###############################################################################
-# completions
+# static completers (compdef already exists by now — compinit ran above)
 ###############################################################################
-fpath=(${HOME}/.zshrc.d/completions/ $fpath)
-fpath=(${HOMEBREW_PREFIX}/share/zsh/site-functions $fpath)
-
-if command -v assume >/dev/null 2>&1; then
-  fpath=(${HOME}/.granted/zsh_autocomplete/assume/ $fpath)
-fi
-
-if command -v granted >/dev/null 2>&1; then
-  fpath=(${HOME}/.granted/zsh_autocomplete/granted/ $fpath)
-fi
-
 source ${HOMEBREW_PREFIX}/Caskroom/gcloud-cli/latest/google-cloud-sdk/completion.zsh.inc
 source ${HOMEBREW_PREFIX}/opt/python-argcomplete/share/bash-completion/completions/python-argcomplete
 
 complete -C aws_completer aws
 complete -C terragrunt terragrunt
+###############################################################################
+
+
+###############################################################################
+# oh-my-zsh: deferred (turbo — loads a moment after the first prompt renders)
+###############################################################################
+# NOTE: each item needs a *distinct* wait sub-label even though they all mean
+# "as soon as possible after the prompt" — zinit keys its turbo scheduler by
+# the literal wait value, so identical labels collide and silently drop every
+# item but the first. But zinit only accepts suffixes a/b/c (or none) per
+# integer time bucket — max 4 items per bucket — so items beyond the 4th
+# spread into the next integer second (1, 1a, 1b, 1c, then 2, 2a, ...).
+# Verified empirically (including checking for zinit's own warnings, which an
+# earlier pass here missed) before this was understood.
+zinit ice wait'0' lucid;  zinit snippet OMZL::completion.zsh
+zinit ice wait'0a' lucid; zinit snippet OMZL::clipboard.zsh
+zinit ice wait'0b' lucid; zinit snippet OMZL::spectrum.zsh
+zinit ice wait'0c' lucid; zinit snippet OMZP::aws
+zinit ice wait'1' lucid;  zinit snippet OMZP::colored-man-pages
+zinit ice wait'1a' lucid; zinit snippet OMZP::docker
+zinit ice wait'1b' lucid; zinit snippet OMZP::github
+zinit ice wait'1c' lucid; zinit snippet OMZP::pip
+zinit ice wait'2' lucid;  zinit snippet OMZP::kubectl
+zinit ice wait'2a' lucid; zinit snippet OMZP::terraform
 ###############################################################################
 
 
@@ -106,6 +142,8 @@ _zsh_eval_cache() {
   fi
   [[ -f "$cache" ]] && source "$cache"
 }
+
+eval "$(register-python-argcomplete pipenv)"
 
 _zsh_eval_cache fzf fzf --zsh
 _zsh_eval_cache starship starship init zsh
