@@ -62,7 +62,7 @@ function defang() {
 function brewdump() {
   brewfile_realpath="$(realpath "${HOME}/Brewfile")"
 
-  brew bundle dump --force --file "${brewfile_realpath}" 2> >(grep -v "exec: asdf: not found" >&2)
+  brew bundle dump --force --file "${brewfile_realpath}"
   sed -i '' '/^mas /d' "${brewfile_realpath}"
   sed -i '' '/^go /d' "${brewfile_realpath}"
   sed -i '' '/^uv /d' "${brewfile_realpath}"

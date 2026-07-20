@@ -144,6 +144,7 @@ _zsh_eval_cache() {
 }
 
 eval "$(register-python-argcomplete pipenv)"
+eval "$(mise activate zsh)"
 
 _zsh_eval_cache fzf fzf --zsh
 _zsh_eval_cache starship starship init zsh
