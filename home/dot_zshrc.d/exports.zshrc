@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
 
+source $HOME/.local/bin/env
+
 export PATH="$PATH:$HOME/bin"
 export PATH="$PATH:${HOMEBREW_PREFIX}/bin"
 export PATH="$PATH:${HOMEBREW_PREFIX}/sbin"
