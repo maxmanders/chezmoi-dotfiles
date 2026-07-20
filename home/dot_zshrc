@@ -1,6 +1,8 @@
 # Deduplicate PATH entries
 typeset -U path
 
+HOMEBREW_PREFIX=/opt/homebrew
+HOMEBREW_NO_AUTO_UPDATE=1
 
 ###############################################################################
 # zplug
@@ -48,8 +50,6 @@ zplug load
 ###############################################################################
 # includes
 ###############################################################################
-HOMEBREW_PREFIX=/opt/homebrew
-
 if [[ "$(uname)" == "Linux" ]]; then
   HOMEBREW_PREFIX=/home/linuxbrew/.linuxbrew
 fi
