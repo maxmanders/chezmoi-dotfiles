@@ -19,7 +19,21 @@ alias grep="pcregrep --color=auto"
 alias gup="gfo && ggpull"
 alias h="history"
 alias kittyreload="kill -SIGUSR1 $KITTY_PID"
-alias kubectl=kubecolor
+
+# kubecolor colorizes kubectl output, but zsh's `kubectl completion zsh`
+# invokes `kubectl __complete ...` internally — an alias here makes that
+# call resolve to kubecolor, which colorizes the completion-protocol
+# directive line (e.g. ":4") and breaks tab completion (raw escape codes
+# show up instead of results). Route completion-protocol calls to the
+# real binary; everything else still goes through kubecolor.
+kubectl() {
+  case "$1" in
+    __complete|completion) command kubectl "$@" ;;
+    *) kubecolor "$@" ;;
+  esac
+}
+compdef _kubectl kubectl
+
 alias ls="lsd"
 alias l="ll"
 alias less="less -m -g -i -J --underline-special --SILENT"
