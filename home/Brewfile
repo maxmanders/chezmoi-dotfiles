@@ -491,8 +491,6 @@ brew "terragrunt-atlantis-config"
 brew "tesseract"
 # CLI to print the summary of the terraform plan
 brew "tf-summarize"
-# Terraform version manager inspired by rbenv
-brew "tfenv"
 # Linter for Terraform files
 brew "tflint"
 # Code-search similar to ack
