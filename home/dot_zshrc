@@ -1,6 +1,14 @@
 # Deduplicate PATH entries
 typeset -U path
 
+# Guard against a stale $ZSH leaking in from tmux's global environment (or any
+# other long-lived ancestor process) — a holdover from oh-my-zsh/zplug's
+# convention of exporting $ZSH to their install dir. zinit's OMZ snippet
+# update path treats a set $ZSH as "oh-my-zsh is installed traditionally" and
+# tries to sync from $ZSH/lib and $ZSH/plugins as local files, breaking
+# `zinit update` if that directory doesn't exist.
+unset ZSH
+
 export HOMEBREW_PREFIX=/opt/homebrew
 if [[ "$(uname)" == "Linux" ]]; then
   export HOMEBREW_PREFIX=/home/linuxbrew/.linuxbrew
