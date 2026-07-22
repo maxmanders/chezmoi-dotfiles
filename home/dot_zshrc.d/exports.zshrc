@@ -2,12 +2,12 @@
 
 source $HOME/.local/bin/env
 
-export PATH="$PATH:$HOME/bin"
-export PATH="$PATH:${HOMEBREW_PREFIX}/bin"
-export PATH="$PATH:${HOMEBREW_PREFIX}/sbin"
-export PATH="$PATH:${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin"
+# Prepended (not appended) so Homebrew's git (and its matching zsh completion
+# script in HOMEBREW_PREFIX/share/zsh/site-functions) wins over /usr/bin's
+# older Apple-patched git — a version mismatch there breaks `git <TAB>` with
+# "unknown option `aliases-for-completion'".
+export PATH="$HOME/bin:${HOMEBREW_PREFIX}/bin:${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin:/usr/local/bin:$PATH"
 export PATH="$PATH:/bin"
-export PATH="$PATH:/usr/local/bin"
 
 export AWS_PAGER=
 
