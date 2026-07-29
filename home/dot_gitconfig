@@ -36,6 +36,8 @@
   pager = delta
 [diff]
   tool = nvimdiff
+  colorMoved = default
+  algorithm = histogram
 [difftool]
   prompt = false
 [difftool "nvimdiff"]
@@ -48,8 +50,13 @@
 [credential]
   helper = osxkeychain
 [push]
-  default = simple
   autoSetupRemote = true
+[fetch]
+  prune = true
+[rebase]
+  autoStash = true
+[rerere]
+  enabled = true
 [commit]
   gpgsign = true
 [user]
@@ -62,7 +69,10 @@
   navigate = true
   line-numbers = true
 [merge]
+  tool = nvimdiff
   conflictStyle = zdiff3
+[mergetool]
+  keepBackup = false
 [credential "https://github.com"]
   helper = !gh auth git-credential
 [credential "https://gist.github.com"]
