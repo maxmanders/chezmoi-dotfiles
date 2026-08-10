@@ -1,3 +1,4 @@
+tap "chainguard-dev/tap", trusted: true
 tap "common-fate/granted"
 tap "fluxcd/tap"
 tap "guessi/tap"
@@ -547,6 +548,8 @@ brew "zoxide"
 brew "zsh"
 # Fish shell like syntax highlighting for zsh
 brew "zsh-syntax-highlighting"
+# CLI for the Chainguard Platform
+brew "chainguard-dev/tap/chainctl"
 # The easiest way to access your cloud.
 brew "common-fate/granted/granted", trusted: true
 # Flux CLI
