@@ -2,6 +2,7 @@
 helm = "latest"
 helmfile = "1.7.3"
 node = "25.2.0"
+postgres = "17"
 python = "3.14.0"
 terraform = "1.5.7"
 terragrunt = "0.92.1"
