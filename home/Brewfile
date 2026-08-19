@@ -58,10 +58,6 @@ brew "bash-completion"
 brew "oniguruma"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
-# GNU multiple precision arithmetic library
-brew "gmp"
-# GNU File, Shell, and Text utilities
-brew "coreutils"
 # Bash Automated Testing System
 brew "bats-core"
 # CLI utility for caching the output of subprocesses
@@ -98,6 +94,10 @@ brew "cloc"
 brew "cmake"
 # Command-line tool to manage cert-manager
 brew "cmctl"
+# GNU multiple precision arithmetic library
+brew "gmp"
+# GNU File, Shell, and Text utilities
+brew "coreutils"
 # Tool for browsing source code
 brew "cscope"
 # Suite of command-line tools for converting to and working with CSV
@@ -428,8 +428,6 @@ brew "pipenv"
 brew "pipx"
 # Package compiler and linker metadata toolkit
 brew "pkgconf"
-# Object-relational database system
-brew "postgresql@14"
 # Command-line shell and scripting language
 brew "powershell", link: false
 # Code formatter for JavaScript, CSS, JSON, GraphQL, Markdown, YAML
@@ -571,7 +569,6 @@ cask "font-fira-code-nerd-font"
 cask "font-fira-mono"
 # Set of tools to manage resources and applications hosted on Google Cloud
 cask "gcloud-cli"
-# Command-line shell and scripting language
 cask "powershell"
 # Pluggable Terraform linter
 cask "terraform-linters/tap/tflint", trusted: true
