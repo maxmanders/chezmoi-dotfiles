@@ -219,3 +219,12 @@ tk() {
     tmux kill-session -t "${s}"
   done
 }
+
+aws-ip-to-name() {
+  local ip_address="${1}"
+
+  aws ec2 describe-instances \
+    --filters "Name=network-interface.addresses.private-ip-address,Values=${ip_address}" \
+    --query "Reservations[].Instances[].{ID:InstanceId,Name:Tags[?Key=='Name']|[0].Value}" \
+    --output text
+}
