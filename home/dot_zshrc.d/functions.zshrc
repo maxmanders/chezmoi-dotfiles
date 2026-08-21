@@ -220,11 +220,20 @@ tk() {
   done
 }
 
-aws-ip-to-name() {
+ec2-ip-to-name() {
   local ip_address="${1}"
 
   aws ec2 describe-instances \
     --filters "Name=network-interface.addresses.private-ip-address,Values=${ip_address}" \
     --query "Reservations[].Instances[].{ID:InstanceId,Name:Tags[?Key=='Name']|[0].Value}" \
     --output text
+}
+
+ec2-name-to-ip() {
+  local pattern="$1"
+
+  aws ec2 describe-instances \
+    --filters "Name=tag:Name,Values=*${pattern}*" "Name=instance-state-name,Values=running,stopped" \
+    --query "Reservations[].Instances[].{Name:Tags[?Key=='Name']|[0].Value,State:State.Name,IPs:NetworkInterfaces[].PrivateIpAddresses[].PrivateIpAddress}" \
+    --output json | jq -r '.[] | "\(.Name) [\(.State)]: \(.IPs | join(", "))"'
 }
