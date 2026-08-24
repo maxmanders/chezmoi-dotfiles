@@ -567,6 +567,7 @@ cask "home-operations/tap/flate", trusted: true
 cask "font-fira-code"
 cask "font-fira-code-nerd-font"
 cask "font-fira-mono"
+cask "font-jetbrains-mono-nerd-font"
 # Set of tools to manage resources and applications hosted on Google Cloud
 cask "gcloud-cli"
 cask "powershell"
