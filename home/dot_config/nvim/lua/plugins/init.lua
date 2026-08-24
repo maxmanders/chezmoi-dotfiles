@@ -143,6 +143,29 @@ return {
     opts = {},
     config = function()
       require("aerial").setup {
+        layout = {
+          -- Fixed width rather than resize_to_content — that let long
+          -- Terraform "type.name" labels grow the sidebar up to 90% of
+          -- the editor width, crowding out nvim-tree.
+          width = 40,
+        },
+        -- Fold the second label of resource/data blocks (captured as
+        -- @extra_name by queries/hcl/aerial.scm) into "type.name" so
+        -- e.g. `resource "aws_instance" "foo"` shows as one entry instead
+        -- of two separate "aws_instance" and "foo" entries.
+        post_parse_symbol = function(bufnr, item, ctx)
+          -- @extra_name only exists when queries/hcl/aerial.scm's two-label
+          -- pattern matched, so checking for it is enough — no need to also
+          -- gate on ctx.lang (which reports "terraform" for .tf files, not
+          -- "hcl", even though the hcl query file is what's actually used).
+          -- ctx.match is only present for the treesitter backend; the LSP
+          -- backend (e.g. terraform-ls) calls this hook too with no match.
+          local extra_name = ((ctx.match or {}).extra_name or {}).node
+          if extra_name then
+            item.name = string.format("%s.%s", item.name, vim.treesitter.get_node_text(extra_name, bufnr))
+          end
+          return true
+        end,
         float = {
           relative = "win",
           override = function(conf)
