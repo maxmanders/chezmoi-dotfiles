@@ -573,6 +573,8 @@ cask "gcloud-cli"
 cask "powershell"
 # Pluggable Terraform linter
 cask "terraform-linters/tap/tflint", trusted: true
+# Menu bar manager
+cask "thaw"
 krew "cert-manager"
 krew "cnpg"
 krew "explore"
