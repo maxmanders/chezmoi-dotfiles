@@ -237,3 +237,10 @@ ec2-name-to-ip() {
     --query "Reservations[].Instances[].{Name:Tags[?Key=='Name']|[0].Value,State:State.Name,IPs:NetworkInterfaces[].PrivateIpAddresses[].PrivateIpAddress}" \
     --output json | jq -r '.[] | "\(.Name) [\(.State)]: \(.IPs | join(", "))"'
 }
+
+list-aws-org-accounts() {
+  assume --exec -- \
+    aws organizations list-accounts \
+    --query 'sort_by(Accounts, &Name)[].[Id,Name]' \
+    --output text
+}
