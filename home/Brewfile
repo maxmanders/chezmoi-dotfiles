@@ -4,6 +4,7 @@ tap "fluxcd/tap"
 tap "guessi/tap"
 tap "home-operations/tap"
 tap "kdash-rs/kdash"
+tap "oven-sh/bun"
 tap "terraform-linters/tap"
 tap "universal-ctags/universal-ctags", trusted: true
 # C/C++ resolver library and DNS resolver utilities
@@ -560,6 +561,8 @@ brew "fluxcd/tap/flux", trusted: true
 brew "guessi/tap/eks-ami-finder", trusted: true
 # A fast and simple dashboard for Kubernetes written in Rust
 brew "kdash-rs/kdash/kdash", trusted: true
+# Incredibly fast JavaScript runtime, bundler, transpiler and package manager - all in one.
+brew "oven-sh/bun/bun", trusted: true
 # Command-line interface for 1Password
 cask "1password-cli"
 # Terminal-based AI coding assistant
