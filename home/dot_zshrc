@@ -158,3 +158,5 @@ _zsh_eval_cache mise mise completion zsh
 # Generated for pdtm. Do not edit.
 export PATH=$PATH:/Users/max/.pdtm/go/bin
 
+source <(switcher init zsh)
+source <(switch completion zsh)

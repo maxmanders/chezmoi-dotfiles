@@ -1,5 +1,6 @@
 tap "chainguard-dev/tap", trusted: true
 tap "common-fate/granted"
+tap "danielfoehrkn/switch", trusted: { formulae: ["switcher"] }
 tap "fluxcd/tap"
 tap "guessi/tap"
 tap "home-operations/tap"
@@ -555,6 +556,8 @@ brew "zsh-syntax-highlighting"
 brew "chainguard-dev/tap/chainctl"
 # The easiest way to access your cloud.
 brew "common-fate/granted/granted", trusted: true
+# The kubectx for operators.
+brew "danielfoehrkn/switch/switch", trusted: true
 # Flux CLI
 brew "fluxcd/tap/flux", trusted: true
 # Retrieve Amazon EKS AMI with filters
