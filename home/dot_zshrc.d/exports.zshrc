@@ -31,3 +31,5 @@ export ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR=${HOMEBREW_PREFIX}/share/zsh-syntax-highli
 if hash gdircolors 2> /dev/null; then
   test -r "~/.dir_colors" && eval $(dircolors ~/.dir_colors)
 fi
+
+export KUBECONFIG=$(\find ${HOME}/.kube/configs -type f -iname '*.yaml' | sort | tr "\n" ":")
