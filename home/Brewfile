@@ -310,8 +310,6 @@ brew "ksops"
 brew "kubecolor"
 # CloudNativePG plugin for kubectl
 brew "kubectl-cnpg"
-# Tool that can switch between kubectl contexts easily and create aliases
-brew "kubectx"
 # Kubernetes controller and tool for one-way encrypted Secrets
 brew "kubeseal"
 # Template-free customization of Kubernetes YAML manifests
