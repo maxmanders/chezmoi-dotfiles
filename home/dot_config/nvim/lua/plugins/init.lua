@@ -57,6 +57,16 @@ return {
             vim.opt_local.foldmethod = "expr"
             vim.opt_local.foldexpr = "v:lua._safe_ts_foldexpr()"
           end
+
+          -- tree-sitter-xml mis-parses multiline comments that contain
+          -- tag-like text (e.g. "<integration>" in prose), and its
+          -- highlights.scm has no (ERROR) capture, so a parse error there
+          -- leaves the rest of the buffer unhighlighted. Layer in legacy
+          -- regex syntax as a fallback for filetypes where this bites.
+          local ts_fallback_filetypes = { xml = true }
+          if ts_fallback_filetypes[args.match] then
+            vim.bo[args.buf].syntax = args.match
+          end
         end,
       })
     end,
