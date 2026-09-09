@@ -1,5 +1,11 @@
 local lint = require "lint"
 
+lint.linters.ruff = vim.tbl_extend("force", lint.linters.ruff, {
+  cmd = function()
+    return require("util.ruff").find(vim.fn.getcwd())
+  end,
+})
+
 lint.linters_by_ft = {
   python = { "ruff" },
   yaml = { "yamllint" },

@@ -1,4 +1,12 @@
 local options = {
+  formatters = {
+    ruff_format = {
+      command = function(_, ctx)
+        return require("util.ruff").find(ctx.dirname)
+      end,
+    },
+  },
+
   formatters_by_ft = {
     lua = { "stylua" },
     python = { "ruff_format" },

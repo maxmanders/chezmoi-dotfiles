@@ -25,6 +25,13 @@ vim.lsp.config("yaml-language-server", {
   },
 })
 
+vim.lsp.config("ruff", {
+  cmd = function(dispatchers, config)
+    local ruff = require("util.ruff").find(config.root_dir)
+    return vim.lsp.rpc.start({ ruff, "server" }, dispatchers)
+  end,
+})
+
 vim.lsp.config("helm-ls", {
   settings = {
     helm_ls = {
