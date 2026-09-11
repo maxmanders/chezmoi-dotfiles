@@ -19,6 +19,9 @@ end, {
 )
 
 map("n", "<leader>a", "<cmd>AerialToggle!<CR>", { desc = "Toggle Aerial" })
+map("n", "<leader>tfd", function()
+  require("util.terraform_docs").open()
+end, { desc = "Open Terraform registry docs for resource under cursor" })
 map("n", "<leader>gg", "<cmd> LazyGit<CR>", { desc = "Toggle LazyGit" })
 
 map("v", ">", ">gv", { desc = "Indent text" })
