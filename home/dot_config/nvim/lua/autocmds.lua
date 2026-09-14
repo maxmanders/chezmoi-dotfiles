@@ -77,16 +77,30 @@ local function helm_chart_root(path)
   end
 end
 
+-- NOTE: vim.filetype.add() implicitly anchors user patterns with ^...$, so patterns
+-- here must not supply their own trailing "$" (a second "$" is treated as a literal
+-- character in Lua patterns, not an anchor, and silently prevents any match).
 vim.filetype.add({
   pattern = {
-    [".*%.yaml%.gotmpl$"] = function(path)
-      return helm_chart_root(path) and "helm" or "yaml"
+    -- *.yaml.gotmpl outside of a Helm chart is a Helmfile state/values file
+    -- (github.com/helmfile/helmfile) — same Go-template-in-YAML syntax, but no
+    -- Chart.yaml, so it gets its own filetype rather than "helm".
+    [".*%.yaml%.gotmpl"] = function(path)
+      return helm_chart_root(path) and "helm" or "helmfile"
     end,
-    [".*%.yaml$"] = function(path)
+    [".*%.yaml"] = function(path)
       if helm_chart_root(path) then return "helm" end
     end,
   },
 })
+
+-- Reuse the "helm" treesitter parser (tree-sitter-go-template's helm dialect,
+-- which injects a combined "yaml" parse over the surrounding text) for
+-- highlighting "helmfile" buffers too, so {{ }} templating and YAML both get
+-- highlighted. Deliberately not just filetype = "helm": that would also pull in
+-- helm-ls.nvim and the chart-specific <leader>H* keymaps below, which expect an
+-- actual Chart.yaml.
+vim.treesitter.language.register("helm", "helmfile")
 
 -- The helm treesitter grammar uses injection.combined for YAML (spanning the whole file).
 -- This causes the incremental updater to not re-highlight newly typed template nodes.
