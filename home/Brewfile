@@ -52,6 +52,8 @@ brew "azure-cli"
 brew "libunistring"
 # GNU internationalization (i18n) and localization (l10n) library
 brew "gettext"
+# JSON parser for C
+brew "json-c"
 # Bourne-Again SHell, a UNIX command interpreter
 brew "bash"
 # Programmable completion for Bash 3.2
@@ -74,8 +76,6 @@ brew "c-ares"
 brew "libpng"
 # Software library to render fonts
 brew "freetype"
-# JSON parser for C
-brew "json-c"
 # XML-based font configuration API for X Windows
 brew "fontconfig"
 # Perl compatible regular expressions library with a new API
@@ -429,7 +429,7 @@ brew "pipx"
 # Package compiler and linker metadata toolkit
 brew "pkgconf"
 # Command-line shell and scripting language
-brew "powershell", link: false
+brew "powershell"
 # Code formatter for JavaScript, CSS, JSON, GraphQL, Markdown, YAML
 brew "prettier"
 # Parallel versions of OpenSSH and related tools
@@ -523,7 +523,7 @@ brew "watch"
 # Internet file retriever
 brew "wget"
 # Port of OpenAI's Whisper model in C/C++
-brew "whisper-cpp"
+brew "whisper.cpp"
 # Network analyzer and capture tool - without graphical user interface
 brew "wireshark"
 # High-performance, high-quality MPEG-4 video library
