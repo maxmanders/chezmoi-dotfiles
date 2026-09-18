@@ -492,8 +492,6 @@ brew "terragrunt-atlantis-config"
 brew "tesseract"
 # CLI to print the summary of the terraform plan
 brew "tf-summarize"
-# Linter for Terraform files
-brew "tflint"
 # Code-search similar to ack
 brew "the_silver_searcher"
 # Open video compression format
