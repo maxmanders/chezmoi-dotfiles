@@ -595,6 +595,8 @@ mas "SnippetsLab", id: 1006087419
 {{- end }}
 
 {{- if eq .chezmoi.os "linux" }}
+# Dependency of other Linux formulae
+brew "node"
 # freedesktop.org trashcan CLI — Linux equivalent of macOS's `trash`
 brew "trash-cli"
 {{- end }}
