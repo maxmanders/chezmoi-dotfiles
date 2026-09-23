@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# Reconcile the chezmoi-managed Brewfile.tmpl against what's actually
+# installed on this machine. brew bundle dump can't write into a templated
+# Brewfile, so this reports the drift instead and leaves placement (common
+# vs OS-specific block) to a human.
+set -euo pipefail
+
+target="$HOME/Brewfile"
+source_file="$(chezmoi source-path "$target" 2>/dev/null)" || {
+  echo "error: $target is not managed by chezmoi" >&2
+  exit 1
+}
+
+extract() {
+  grep -oE '^[[:space:]]*(tap|brew|cask|mas|vscode|whalebrew|krew)[[:space:]]+"[^"]+"' | sed -E 's/^[[:space:]]+//' | sort -u
+}
+
+declared="$(chezmoi cat "$target" | extract)"
+installed="$(brew bundle dump --file=- | extract)"
+
+to_add="$(comm -13 <(echo "$declared") <(echo "$installed"))"
+to_remove="$(comm -23 <(echo "$declared") <(echo "$installed"))"
+
+echo "Brewfile.tmpl: $source_file"
+echo "this machine:  $(chezmoi execute-template '{{ .chezmoi.os }}')"
+echo
+
+if [[ -n "$to_add" ]]; then
+  echo "Installed but not declared — add to the common or OS-specific block:"
+  echo "$to_add" | sed 's/^/  /'
+  echo
+fi
+
+if [[ -n "$to_remove" ]]; then
+  echo "Declared but not currently installed — stale, or run 'brew bundle':"
+  echo "$to_remove" | sed 's/^/  /'
+  echo
+fi
+
+if [[ -z "$to_add" && -z "$to_remove" ]]; then
+  echo "In sync — nothing to reconcile."
+fi
