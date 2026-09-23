@@ -2,7 +2,8 @@
 # Reconcile the chezmoi-managed Brewfile.tmpl against what's actually
 # installed on this machine. brew bundle dump can't write into a templated
 # Brewfile, so this reports the drift instead and leaves placement (common
-# vs OS-specific block) to a human.
+# vs OS-specific block) to a human. Suggested lines keep their full
+# arguments (e.g. `mas "Slack", id: 803453959`) so they're paste-ready.
 set -euo pipefail
 
 target="$HOME/Brewfile"
@@ -11,32 +12,54 @@ source_file="$(chezmoi source-path "$target" 2>/dev/null)" || {
   exit 1
 }
 
-extract() {
-  grep -oE '^[[:space:]]*(tap|brew|cask|mas|vscode|whalebrew|krew)[[:space:]]+"[^"]+"' | sed -E 's/^[[:space:]]+//' | sort -u
+entry_lines() {
+  grep -oE '^[[:space:]]*(tap|brew|cask|mas|vscode|whalebrew|krew)[[:space:]]+"[^"]+".*' | sed -E 's/^[[:space:]]+//'
 }
 
-declared="$(chezmoi cat "$target" | extract)"
-installed="$(brew bundle dump --file=- | extract)"
+entry_key() {
+  sed -E 's/^((tap|brew|cask|mas|vscode|whalebrew|krew)[[:space:]]+"[^"]+").*/\1/'
+}
 
-to_add="$(comm -13 <(echo "$declared") <(echo "$installed"))"
-to_remove="$(comm -23 <(echo "$declared") <(echo "$installed"))"
+# "<key>\t<full line>" so a diff on the key can still recover the original
+# line — including any id/trusted/args suffix — for display.
+tag_by_key() {
+  while IFS= read -r line; do
+    printf '%s\t%s\n' "$(entry_key <<<"$line")" "$line"
+  done
+}
+
+filter_by_keys() {
+  awk -F'\t' -v keyfile="$1" '
+    BEGIN { while ((getline k < keyfile) > 0) keep[k] = 1 }
+    keep[$1] { print $2 }
+  '
+}
+
+declared="$(chezmoi cat "$target" | entry_lines | tag_by_key | sort -u)"
+installed="$(brew bundle dump --file=- | entry_lines | tag_by_key | sort -u)"
+
+add_keys="$(comm -13 <(cut -f1 <<<"$declared") <(cut -f1 <<<"$installed"))"
+remove_keys="$(comm -23 <(cut -f1 <<<"$declared") <(cut -f1 <<<"$installed"))"
+
+to_add="$(filter_by_keys <(echo "$add_keys") <<<"$installed")"
+to_remove="$(filter_by_keys <(echo "$remove_keys") <<<"$declared")"
 
 echo "Brewfile.tmpl: $source_file"
 echo "this machine:  $(chezmoi execute-template '{{ .chezmoi.os }}')"
 echo
 
-if [[ -n "$to_add" ]]; then
+if [[ -n "$add_keys" ]]; then
   echo "Installed but not declared — add to the common or OS-specific block:"
   echo "$to_add" | sed 's/^/  /'
   echo
 fi
 
-if [[ -n "$to_remove" ]]; then
+if [[ -n "$remove_keys" ]]; then
   echo "Declared but not currently installed — stale, or run 'brew bundle':"
   echo "$to_remove" | sed 's/^/  /'
   echo
 fi
 
-if [[ -z "$to_add" && -z "$to_remove" ]]; then
+if [[ -z "$add_keys" && -z "$remove_keys" ]]; then
   echo "In sync — nothing to reconcile."
 fi
