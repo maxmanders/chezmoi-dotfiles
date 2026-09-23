@@ -5,11 +5,16 @@ local options = {
         return require("util.ruff").find(ctx.dirname)
       end,
     },
+    ruff_organize_imports = {
+      command = function(_, ctx)
+        return require("util.ruff").find(ctx.dirname)
+      end,
+    },
   },
 
   formatters_by_ft = {
     lua = { "stylua" },
-    python = { "ruff_format" },
+    python = { "ruff_organize_imports", "ruff_format" },
     yaml = { "yamlfmt" },
     helm = {},
     json = { "prettier" },
