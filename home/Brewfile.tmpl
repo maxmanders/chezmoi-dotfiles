@@ -474,8 +474,6 @@ brew "ssh-copy-id"
 brew "starship"
 # Traceroute implementation using TCP packets
 brew "tcptraceroute"
-# User interface to the TELNET protocol
-brew "telnet"
 # Tool to generate documentation from Terraform modules
 brew "terraform-docs"
 # Improve Terraform's plan output
@@ -494,8 +492,6 @@ brew "theora"
 brew "tig"
 # Simplified and community-driven man pages
 brew "tldr"
-# CLI tool that moves files or folder to the trash
-brew "trash"
 # Parser generator tool
 brew "tree-sitter-cli"
 # Incremental parsing library
@@ -561,6 +557,10 @@ brew "oven-sh/bun/bun", trusted: true
 brew "mas"
 # Reattach process (e.g., tmux) to background
 brew "reattach-to-user-namespace"
+# User interface to the TELNET protocol
+brew "telnet"
+# CLI tool that moves files or folder to the trash
+brew "trash"
 tap "home-operations/tap"
 # Command-line interface for 1Password
 cask "1password-cli"
@@ -595,7 +595,8 @@ mas "SnippetsLab", id: 1006087419
 {{- end }}
 
 {{- if eq .chezmoi.os "linux" }}
-# Linux-only packages go here
+# freedesktop.org trashcan CLI — Linux equivalent of macOS's `trash`
+brew "trash-cli"
 {{- end }}
 
 krew "cert-manager"
