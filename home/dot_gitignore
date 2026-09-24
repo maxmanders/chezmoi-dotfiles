@@ -44,3 +44,4 @@ pyrightconfig.json
 .terraform.lock.hcl
 
 **/.claude/settings.local.json
+mise.local.toml
