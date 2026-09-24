@@ -338,10 +338,10 @@ return {
             mirror_horizontal = true, -- this will exchange prompt and results
           },
         },
-        pickers = {
-          find_files = {
-            theme = "ivy",
-          },
+      },
+      pickers = {
+        find_files = {
+          theme = "ivy",
         },
       },
     },
