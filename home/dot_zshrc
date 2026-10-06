@@ -37,6 +37,8 @@ fi
 
 zinit ice blockf
 zinit light zsh-users/zsh-completions
+
+zinit light fingergohappy/git-wt
 ###############################################################################
 
 
