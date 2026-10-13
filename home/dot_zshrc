@@ -87,7 +87,6 @@ done
 ###############################################################################
 # static completers (compdef already exists by now — compinit ran above)
 ###############################################################################
-source ${HOMEBREW_PREFIX}/Caskroom/gcloud-cli/latest/google-cloud-sdk/completion.zsh.inc
 source ${HOMEBREW_PREFIX}/opt/python-argcomplete/share/bash-completion/completions/python-argcomplete
 
 complete -C aws_completer aws
