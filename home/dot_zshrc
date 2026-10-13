@@ -85,22 +85,6 @@ done
 
 
 ###############################################################################
-# static completers (compdef already exists by now — compinit ran above)
-###############################################################################
-# `complete` is a bash-compat shim, not a zsh builtin. OMZL::completion.zsh
-# also runs bashcompinit, but it's turbo-deferred below (wait'0'), so it hasn't
-# fired yet at this point in a *login* shell — hence load it explicitly here.
-# (Re-sourcing .zshrc masked this: the deferred load had already happened.)
-autoload -Uz bashcompinit && bashcompinit
-
-source ${HOMEBREW_PREFIX}/opt/python-argcomplete/share/bash-completion/completions/python-argcomplete
-
-complete -C aws_completer aws
-complete -C terragrunt terragrunt
-###############################################################################
-
-
-###############################################################################
 # oh-my-zsh: deferred (turbo — loads a moment after the first prompt renders)
 ###############################################################################
 # NOTE: each item needs a *distinct* wait sub-label even though they all mean
@@ -120,6 +104,28 @@ zinit ice wait'1b' lucid; zinit snippet OMZP::gh
 zinit ice wait'1c' lucid; zinit snippet OMZP::pip
 zinit ice wait'2' lucid atload'compdef kubecolor=kubectl'; zinit snippet OMZP::kubectl
 zinit ice wait'2a' lucid; zinit snippet OMZP::terraform
+###############################################################################
+
+
+###############################################################################
+# deferred completers for tools with no native zsh widget — terraform and
+# terragrunt (HashiCorp's posener/complete library only speaks bash's
+# COMP_* protocol; there's no zsh compsys equivalent upstream) and
+# argcomplete's global activator (also bash-shaped). bashcompinit's cost is
+# deferred to just after the first prompt instead of paid on every login.
+# (AWS needs no entry here: the awscli formula ships a real `_aws` compsys
+# function on fpath, which compinit already wires up lazily on first <Tab>.)
+###############################################################################
+_load_deferred_completers() {
+  autoload -Uz bashcompinit && bashcompinit
+  source ${HOMEBREW_PREFIX}/opt/python-argcomplete/share/bash-completion/completions/python-argcomplete
+  complete -o nospace -C terraform terraform
+  complete -C terragrunt terragrunt
+  add-zsh-hook -d precmd _load_deferred_completers
+  unfunction _load_deferred_completers
+}
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd _load_deferred_completers
 ###############################################################################
 
 
