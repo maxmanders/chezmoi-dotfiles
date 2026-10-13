@@ -87,6 +87,12 @@ done
 ###############################################################################
 # static completers (compdef already exists by now — compinit ran above)
 ###############################################################################
+# `complete` is a bash-compat shim, not a zsh builtin. OMZL::completion.zsh
+# also runs bashcompinit, but it's turbo-deferred below (wait'0'), so it hasn't
+# fired yet at this point in a *login* shell — hence load it explicitly here.
+# (Re-sourcing .zshrc masked this: the deferred load had already happened.)
+autoload -Uz bashcompinit && bashcompinit
+
 source ${HOMEBREW_PREFIX}/opt/python-argcomplete/share/bash-completion/completions/python-argcomplete
 
 complete -C aws_completer aws
