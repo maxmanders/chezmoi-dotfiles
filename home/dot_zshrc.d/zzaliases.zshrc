@@ -53,3 +53,6 @@ alias v="nvim"
 alias vim="nvim"
 alias vimdiff="nvim -d"
 alias wt="git-wt"
+# wt is an alias, so it doesn't inherit git-wt's completion automatically —
+# bind it explicitly (kept in sync with whatever git-wt's completion does).
+compdef wt=git-wt

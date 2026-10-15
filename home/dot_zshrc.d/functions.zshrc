@@ -238,6 +238,53 @@ ec2-name-to-ip() {
     --output json | jq -r '.[] | "\(.Name) [\(.State)]: \(.IPs | join(", "))"'
 }
 
+# Clean up a worktree once its branch has been merged upstream: remove the
+# worktree, return to the project root, pull, and force-delete the local
+# branch (-D, since a squash-merged branch never shows as merged to -d).
+#
+# Note: deliberately doesn't shell out to `git-wt root` — that command
+# refuses to run unless your cwd is already inside a feature worktree, which
+# it no longer is right after `git-wt rm` auto-cd's you out of it.
+wt-done() {
+  emulate -L zsh
+
+  local feature="$1"
+  if [[ -z "${feature}" ]]; then
+    print -u2 "usage: wt-done <feature>"
+    return 1
+  fi
+
+  local toplevel common project_root
+  toplevel=$(command git rev-parse --path-format=absolute --show-toplevel 2>/dev/null) || {
+    print -u2 "wt-done: not inside a git repository"
+    return 1
+  }
+  common=$(command git rev-parse --path-format=absolute --git-common-dir 2>/dev/null)
+  [[ "${common}" == /* ]] || common="${toplevel}/${common}"
+  if [[ "${common:t}" == ".git" ]]; then
+    project_root="${common:h}"
+  else
+    project_root="${common}"
+  fi
+
+  git-wt rm "${feature}" || return 1
+  builtin cd -- "${project_root}" || return 1
+  git pull || return 1
+  git branch -D "${feature}"
+}
+
+_wt_done_features() {
+  emulate -L zsh
+  local -a features
+  local line name
+  for line in ${(f)"$(git-wt list 2>/dev/null)"}; do
+    name="${line%%$'\t'*}"
+    [[ -n "${name}" ]] && features+=("${name}")
+  done
+  _describe 'feature worktree' features
+}
+compdef _wt_done_features wt-done
+
 list-aws-org-accounts() {
   assume --exec -- \
     aws organizations list-accounts \
