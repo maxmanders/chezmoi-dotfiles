@@ -273,17 +273,55 @@ wt-done() {
   git branch -D "${feature}"
 }
 
-_wt_done_features() {
+# Move uncommitted changes (including untracked files) on the current branch
+# into a feature worktree: stash them, create-or-switch to the worktree, then
+# pop. A no-op stash/pop if there's nothing to move — it just creates/switches.
+wt-move() {
+  emulate -L zsh
+
+  local feature="$1"
+  if [[ -z "${feature}" ]]; then
+    print -u2 "usage: wt-move <feature>"
+    return 1
+  fi
+
+  local had_changes=1
+  if git diff --quiet 2>/dev/null \
+    && git diff --cached --quiet 2>/dev/null \
+    && [[ -z "$(git ls-files --others --exclude-standard 2>/dev/null)" ]]; then
+    had_changes=0
+  fi
+
+  if (( had_changes )); then
+    git stash push -u -m "wt-move: ${feature}" || return 1
+  fi
+
+  if _wt_feature_names | grep -qx -- "${feature}"; then
+    git-wt switch "${feature}" || return 1
+  else
+    git-wt cs "${feature}" || return 1
+  fi
+
+  if (( had_changes )); then
+    git stash pop || return 1
+  fi
+}
+
+_wt_feature_names() {
+  emulate -L zsh
+  local line
+  for line in ${(f)"$(git-wt list 2>/dev/null)"}; do
+    [[ -n "${line%%$'\t'*}" ]] && print -r -- "${line%%$'\t'*}"
+  done
+}
+
+_wt_feature_completion() {
   emulate -L zsh
   local -a features
-  local line name
-  for line in ${(f)"$(git-wt list 2>/dev/null)"}; do
-    name="${line%%$'\t'*}"
-    [[ -n "${name}" ]] && features+=("${name}")
-  done
-  _describe 'feature worktree' features
+  features=(${(f)"$(_wt_feature_names)"})
+  (( $#features )) && _describe 'feature worktree' features
 }
-compdef _wt_done_features wt-done
+compdef _wt_feature_completion wt-done wt-move
 
 list-aws-org-accounts() {
   assume --exec -- \
