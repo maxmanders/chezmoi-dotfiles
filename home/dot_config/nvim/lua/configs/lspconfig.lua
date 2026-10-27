@@ -55,6 +55,20 @@ vim.lsp.config("helm-ls", {
   },
 })
 
+-- Don't attach to non-file buffers such as fugitive:// blobs, which would
+-- otherwise be handed to the server as an invalid workspace folder
+for _, name in ipairs(servers) do
+  local root_dir = vim.lsp.config[name].root_dir
+  local root_markers = vim.lsp.config[name].root_markers
+  vim.lsp.config(name, {
+    root_dir = function(bufnr, on_dir)
+      if vim.api.nvim_buf_get_name(bufnr):match "^%a+://" then return end
+      if type(root_dir) == "function" then return root_dir(bufnr, on_dir) end
+      on_dir(root_dir or (root_markers and vim.fs.root(bufnr, root_markers)))
+    end,
+  })
+end
+
 vim.lsp.enable(servers)
 
 vim.api.nvim_create_autocmd("LspAttach", {
