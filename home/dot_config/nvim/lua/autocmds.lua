@@ -153,3 +153,25 @@ vim.api.nvim_create_autocmd("FileType", {
     end, opts("Open Chart.yaml"))
   end,
 })
+
+-- Tag-style navigation from :Git blame: <C-]> opens the commit under the cursor
+-- (as fugitive's <CR> does) and pushes a tag stack entry so <C-T> returns to the
+-- line in the original buffer
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "fugitiveblame",
+  callback = function(args)
+    vim.keymap.set("n", "<C-]>", function()
+      local sha = vim.api.nvim_get_current_line():match "^%^?(%x+)"
+      local origins = {}
+      for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+        local pos = vim.api.nvim_win_get_cursor(win)
+        origins[win] = { vim.api.nvim_win_get_buf(win), pos[1], pos[2] + 1, 0 }
+      end
+      vim.cmd.normal(vim.keycode "<CR>")
+      local win = vim.api.nvim_get_current_win()
+      local from = origins[win]
+      if not from or from[1] == args.buf or from[1] == vim.api.nvim_get_current_buf() then return end
+      vim.fn.settagstack(win, { items = { { bufnr = from[1], from = from, tagname = sha } } }, "t")
+    end, { buffer = args.buf, desc = "Open blame commit with tag stack entry" })
+  end,
+})
