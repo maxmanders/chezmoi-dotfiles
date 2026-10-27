@@ -45,8 +45,8 @@ brew "autoconf"
 brew "automake"
 # Official Amazon AWS command-line interface
 brew "awscli"
-# Microsoft Azure CLI 2.0
-brew "azure-cli"
+# Microsoft Azure
+cask "azure-cli", trusted: true
 # C string library for manipulating Unicode strings
 brew "libunistring"
 # GNU internationalization (i18n) and localization (l10n) library
@@ -600,6 +600,7 @@ mas "reMarkable", id: 1276493162
 mas "Scratchpad", id: 6504040051
 mas "Slack", id: 803453959
 mas "SnippetsLab", id: 1006087419
+mas "Triode", id: 1450027401
 {{- end }}
 
 {{- if eq .chezmoi.os "linux" }}
