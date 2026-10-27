@@ -7,6 +7,7 @@ source $HOME/.local/bin/env
 # older Apple-patched git — a version mismatch there breaks `git <TAB>` with
 # "unknown option `aliases-for-completion'".
 export PATH="$HOME/bin:${HOMEBREW_PREFIX}/bin:${HOMEBREW_PREFIX}/sbin:${HOMEBREW_PREFIX}/opt/coreutils/libexec/gnubin:/usr/local/bin:$PATH"
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 export PATH="$PATH:/bin"
 
 export AWS_PAGER=
