@@ -32,6 +32,21 @@ vim.lsp.config("ruff", {
   end,
 })
 
+-- Pyright uses the first `python` on PATH and ignores VIRTUAL_ENV, so point it
+-- at the active venv (or the project's .venv) explicitly. Done in on_init as
+-- the client has already copied config.settings by the time before_init runs
+vim.lsp.config("pyright", {
+  on_init = function(client)
+    local venv = vim.env.VIRTUAL_ENV
+    if not venv or venv == "" then venv = client.root_dir and client.root_dir .. "/.venv" end
+    local python = venv and venv .. "/bin/python"
+    if python and vim.uv.fs_stat(python) then
+      client.settings = vim.tbl_deep_extend("force", client.settings, { python = { pythonPath = python } })
+      client:notify("workspace/didChangeConfiguration", { settings = client.settings })
+    end
+  end,
+})
+
 vim.lsp.config("helm-ls", {
   settings = {
     helm_ls = {

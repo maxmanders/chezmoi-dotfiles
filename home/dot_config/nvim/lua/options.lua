@@ -101,5 +101,6 @@ vim.api.nvim_create_autocmd("BufEnter", {
   end,
 })
 
--- Prepend mise shims to PATH
-vim.env.PATH = vim.env.HOME .. "/.local/share/mise/shims:" .. vim.env.PATH
+-- Append mise shims to PATH as a fallback; prepending them makes tools like
+-- node run via `mise exec`, which pushes mise's Python ahead of an active venv
+vim.env.PATH = vim.env.PATH .. ":" .. vim.env.HOME .. "/.local/share/mise/shims"
