@@ -220,6 +220,27 @@ tk() {
   done
 }
 
+# jump to a tmux pane across all sessions, optionally filtered by command
+tpane() {
+  emulate -L zsh
+
+  local target
+  target=$(
+    tmux list-panes -a -F '#{session_name}:#{window_index}.#{pane_index}	#{pane_current_command}	#{pane_current_path}' \
+    | grep -i -- "${1:-.}" \
+    | fzf --delimiter='\t' --preview 'tmux capture-pane -ep -t {1}' \
+    | cut -f1
+  ) || return
+
+  [[ -z "${target}" ]] && return 0
+
+  if [[ -n "${TMUX}" ]]; then
+    tmux switch-client -t "${target}"
+  else
+    tmux attach-session -t "${target}"
+  fi
+}
+
 ec2-ip-to-name() {
   local ip_address="${1}"
 
