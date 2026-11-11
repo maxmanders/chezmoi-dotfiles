@@ -351,3 +351,11 @@ list-aws-org-accounts() {
     --output text
 }
 
+tmux-reload-zshrc() {
+  local pane cmd
+
+  tmux list-panes -a -F '#{pane_id} #{pane_current_command}' \
+  | while read -r pane cmd; do
+    [[ "${cmd}" == zsh ]] && tmux send-keys -t "${pane}" C-u ' source ~/.zshrc' Enter
+  done
+}
