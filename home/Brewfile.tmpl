@@ -1,40 +1,29 @@
+# --- Taps ---
 tap "chainguard-dev/tap", trusted: true
 tap "common-fate/granted"
 tap "danielfoehrkn/switch", trusted: { formulae: ["switcher"] }
 tap "fluxcd/tap"
+tap "glincker/tap"
 tap "guessi/tap"
 tap "kdash-rs/kdash"
 tap "oven-sh/bun"
 tap "universal-ctags/universal-ctags", trusted: true
-tap "glincker/tap"
+
+# --- Formulae ---
 # C/C++ resolver library and DNS resolver utilities
 brew "adns"
 # Recompression utilities for .PNG, .MNG, .ZIP, and .GZ files
 brew "advancecomp"
 # Asciicast to GIF converter
 brew "agg"
-# C library SSHv1/SSHv2 client and server protocols
-brew "libssh"
-# YAML Parser
-brew "libyaml"
-# Library for command-line editing
-brew "readline"
-# General-purpose data compression with high compression ratio
-brew "xz"
-# Display directories as trees (with optional color/HTML output)
-brew "tree"
 # Automate deployment, configuration, and upgrading
 brew "ansible"
 # Codec library for encoding and decoding AV1 video streams
 brew "aom"
-# Powerful, clean, object-oriented scripting language
-brew "ruby"
 # Text processor and publishing toolchain for AsciiDoc
 brew "asciidoctor"
 # Record and share terminal sessions
 brew "asciinema"
-# Text-based UI library
-brew "ncurses"
 # Aquarium animation in ASCII art
 brew "asciiquarium"
 # Improved shell history for zsh, bash, fish and nushell
@@ -43,22 +32,14 @@ brew "atuin"
 brew "autoconf"
 # Tool for generating GNU Standards-compliant Makefiles
 brew "automake"
+# aws-nuke is a CLI tool to nuke an entire AWS account
+brew "aws-nuke"
 # Official Amazon AWS command-line interface
 brew "awscli"
-# Microsoft Azure
-cask "azure-cli", trusted: true
-# C string library for manipulating Unicode strings
-brew "libunistring"
-# GNU internationalization (i18n) and localization (l10n) library
-brew "gettext"
-# JSON parser for C
-brew "json-c"
 # Bourne-Again SHell, a UNIX command interpreter
 brew "bash"
 # Programmable completion for Bash 3.2
 brew "bash-completion"
-# Regular expressions library
-brew "oniguruma"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
 # Bash Automated Testing System
@@ -71,20 +52,6 @@ brew "boost"
 brew "btop"
 # Asynchronous DNS library
 brew "c-ares"
-# Library for manipulating PNG images
-brew "libpng"
-# Software library to render fonts
-brew "freetype"
-# XML-based font configuration API for X Windows
-brew "fontconfig"
-# Perl compatible regular expressions library with a new API
-brew "pcre2"
-# Core application library for C
-brew "glib"
-# Real-time data compression library
-brew "lzo"
-# Low-level library for pixel manipulation
-brew "pixman"
 # Vector graphics library with cross-device output support
 brew "cairo"
 # Manage your dotfiles across multiple diverse machines, securely
@@ -95,8 +62,6 @@ brew "cloc"
 brew "cmake"
 # Command-line tool to manage cert-manager
 brew "cmctl"
-# GNU multiple precision arithmetic library
-brew "gmp"
 # GNU File, Shell, and Text utilities
 brew "coreutils"
 # Tool for browsing source code
@@ -127,18 +92,6 @@ brew "duckdb"
 brew "dyff"
 # Simple, fast and user-friendly alternative to find
 brew "fd"
-# High quality MPEG Audio Layer III (MP3) encoder
-brew "lame"
-# VP8/VP9 video codec
-brew "libvpx"
-# Audio codec
-brew "opus"
-# SDL2 compatibility layer that uses SDL3 behind the scenes
-brew "sdl2-compat"
-# H.264/AVC encoder
-brew "x264"
-# H.265/HEVC encoder
-brew "x265"
 # Play, record, convert, and stream select audio and video codecs
 brew "ffmpeg"
 # Banner-like program prints strings as ASCII art
@@ -147,44 +100,32 @@ brew "figlet"
 brew "findutils"
 # User-friendly command-line shell for UNIX-like operating systems
 brew "fish"
-# Ogg Bitstream Library
-brew "libogg"
 # Free lossless audio codec
 brew "flac"
-# Implementation of the Unicode BiDi algorithm
-brew "fribidi"
-# Library and utilities for processing GIFs
-brew "giflib"
-# Smart font renderer for non-Roman scripts
-brew "graphite2"
-# OpenType text shaping engine
-brew "harfbuzz"
-# C/C++ and Java libraries for Unicode and globalization
-brew "icu4c@77"
-# Image format providing lossless and lossy compression for web images
-brew "webp"
-# TIFF library and utilities
-brew "libtiff"
-# Generic library support script
-brew "libtool"
+# XML-based font configuration API for X Windows
+brew "fontconfig"
 # Command-line outline and bitmap font editor/converter
 brew "fontforge"
+# Software library to render fonts
+brew "freetype"
 # Minimalistic plugin API for video effects
 brew "frei0r"
+# Implementation of the Unicode BiDi algorithm
+brew "fribidi"
 # Command-line fuzzy finder written in Go
 brew "fzf"
-# C library for multiple-precision floating-point computations
-brew "mpfr"
 # GNU awk utility
 brew "gawk"
-# Color management engine supporting ICC profiles
-brew "little-cms2"
 # Graphics library to dynamically manipulate images
 brew "gd"
 # GNU database manager
 brew "gdbm"
+# GNU internationalization (i18n) and localization (l10n) library
+brew "gettext"
 # GitHub command-line tool
 brew "gh"
+# Library and utilities for processing GIFs
+brew "giflib"
 # GIF image/animation creator/editor
 brew "gifsicle"
 # Distributed revision control system
@@ -199,8 +140,12 @@ brew "git-filter-repo"
 brew "git-lfs"
 # Simple and efficient way to access statistics in git
 brew "git-quick-stats"
+# Core application library for C
+brew "glib"
 # Render markdown on the CLI
 brew "glow"
+# GNU multiple precision arithmetic library
+brew "gmp"
 # Command-line option parsing utility
 brew "gnu-getopt"
 # C code prettifier
@@ -209,44 +154,18 @@ brew "gnu-indent"
 brew "gnu-sed"
 # GNU version of the tar archiving utility
 brew "gnu-tar"
-# International domain name library (IDNA2008, Punycode and TR46)
-brew "libidn2"
-# ASN.1 structure parser library
-brew "libtasn1"
-# Low-level cryptographic library
-brew "nettle"
-# Library to load and enumerate PKCS#11 modules
-brew "p11-kit"
-# GNU Transport Layer Security (TLS) Library
-brew "gnutls"
-# Common error values for all GnuPG components
-brew "libgpg-error"
-# Assuan IPC Library
-brew "libassuan"
-# Cryptographic library based on the code from GnuPG
-brew "libgcrypt"
-# X.509 and CMS library
-brew "libksba"
-# Library for USB device access
-brew "libusb"
-# New GNU portable threads library
-brew "npth"
-# Passphrase entry dialog utilizing the Assuan protocol
-brew "pinentry"
 # GNU Privacy Guard (OpenPGP)
 brew "gnupg"
+# GNU Transport Layer Security (TLS) Library
+brew "gnutls"
 # Open source programming language to build simple/reliable/efficient software
 brew "go"
 # Terminal based graphical activity monitor inspired by gtop and vtop
 brew "gotop"
 # Open-source build automation tool based on the Groovy and Kotlin DSL
 brew "gradle"
-# Library for manipulating JPEG-2000 images
-brew "jasper"
-# Image manipulation
-brew "netpbm"
-# GNU triangulated surface library
-brew "gts"
+# Smart font renderer for non-Roman scripts
+brew "graphite2"
 # Graph visualization software from AT&T and Bell Labs
 brew "graphviz"
 # GNU grep, egrep and fgrep
@@ -257,12 +176,16 @@ brew "grip"
 brew "gron"
 # Java-based scripting language
 brew "groovy"
+# GNU triangulated surface library
+brew "gts"
 # Smarter Dockerfile linter to validate best practices
 brew "hadolint"
+# OpenType text shaping engine
+brew "harfbuzz"
 # Language server for Helm
 brew "helm-ls"
-# Powerful, lightweight programming language
-brew "lua"
+# Hugging Face command-line interface
+brew "hf"
 # Convert source code to formatted text with syntax highlighting
 brew "highlight"
 # Improved top (interactive process viewer)
@@ -273,12 +196,16 @@ brew "httpie"
 brew "httpstat"
 # Add GitHub support to git on the command-line
 brew "hub"
+# C/C++ and Java libraries for Unicode and globalization
+brew "icu4c@77"
 # Command-line tool to identify your public IP address
 brew "identme"
 # Tools and libraries to manipulate images in select formats
 brew "imagemagick"
 # C library for encoding, decoding, and manipulating JSON
 brew "jansson"
+# Library for manipulating JPEG-2000 images
+brew "jasper"
 # Implementation of malloc emphasizing fragmentation avoidance
 brew "jemalloc"
 # Manage your Java environment
@@ -291,18 +218,16 @@ brew "jless"
 brew "jpeg"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
-# Multi-platform support library with a focus on asynchronous I/O
-brew "libuv"
-# Portable Foreign Function Interface library
-brew "libffi"
+# JSON parser for C
+brew "json-c"
 # JSON parser and validator with a CLI
 brew "jsonlint"
 # Handy way to save and run project-specific commands
 brew "just"
+# Command-line tool for creating and verifying JSON Web Tokens
+brew "jwt-cli"
 # Kubernetes CLI To Manage Your Clusters In Style!
 brew "k9s"
-# Kubernetes command-line interface
-brew "kubernetes-cli"
 # Package manager for kubectl plugins
 brew "krew"
 # Flexible Kustomize Plugin for SOPS Encrypted Resources
@@ -311,62 +236,104 @@ brew "ksops"
 brew "kubecolor"
 # CloudNativePG plugin for kubectl
 brew "kubectl-cnpg"
-# Kubernetes controller and tool for one-way encrypted Secrets
-brew "kubeseal"
 # Kube No Trouble - checks for deprecated APIs in your Kubernetes cluster
 brew "kubent"
+# Kubernetes command-line interface
+brew "kubernetes-cli"
+# Kubernetes controller and tool for one-way encrypted Secrets
+brew "kubeseal"
 # Template-free customization of Kubernetes YAML manifests
 brew "kustomize"
+# High quality MPEG Audio Layer III (MP3) encoder
+brew "lame"
 # Simple terminal UI for git commands
 brew "lazygit", link: false
-# Library for JPEG-2000 image manipulation
-brew "openjpeg"
 # Image processing and image analysis library
 brew "leptonica"
 # Pager program similar to more
 brew "less"
 # Subtitle renderer for the ASS/SSA subtitle format
 brew "libass"
+# Assuan IPC Library
+brew "libassuan"
 # Blu-Ray disc playback library for media players like VLC
 brew "libbluray"
 # Convert pixel information into colored ASCII art
 brew "libcaca"
+# C library for Couchbase
+brew "libcouchbase"
 # Asynchronous event library
 brew "libev"
 # Asynchronous event library
 brew "libevent"
-# C library for Couchbase
-brew "libcouchbase"
+# Portable Foreign Function Interface library
+brew "libffi"
+# Cryptographic library based on the code from GnuPG
+brew "libgcrypt"
+# Common error values for all GnuPG components
+brew "libgpg-error"
+# International domain name library (IDNA2008, Punycode and TR46)
+brew "libidn2"
+# X.509 and CMS library
+brew "libksba"
 # C library for the MaxMind DB file format
 brew "libmaxminddb"
 # C library for creating IP packets
 brew "libnet"
+# Ogg Bitstream Library
+brew "libogg"
+# Library for manipulating PNG images
+brew "libpng"
 # Library for sample rate conversion of audio data
 brew "libsamplerate"
 # Library to Access SMI MIB Information
 brew "libsmi"
-# Vorbis general audio compression codec
-brew "libvorbis"
 # C library for files containing sampled sound
 brew "libsndfile"
 # High quality, one-dimensional sample-rate conversion library
 brew "libsoxr"
+# C library SSHv1/SSHv2 client and server protocols
+brew "libssh"
+# ASN.1 structure parser library
+brew "libtasn1"
 # Library for processing keyboard entry from the terminal
 brew "libtermkey"
+# TIFF library and utilities
+brew "libtiff"
+# Generic library support script
+brew "libtool"
+# C string library for manipulating Unicode strings
+brew "libunistring"
+# Library for USB device access
+brew "libusb"
+# Multi-platform support library with a focus on asynchronous I/O
+brew "libuv"
 # Transcode video stabilization plugin
 brew "libvidstab"
+# Vorbis general audio compression codec
+brew "libvorbis"
+# VP8/VP9 video codec
+brew "libvpx"
 # C XSLT library for GNOME
 brew "libxslt"
+# YAML Parser
+brew "libyaml"
 # C library for manipulating Yubico one-time passwords
 brew "libyubikey"
 # C library for reading, creating, and modifying zip archives
 brew "libzip"
+# Color management engine supporting ICC profiles
+brew "little-cms2"
 # Run LogQL queries against a Loki server
 brew "logcli"
 # Clone of ls with colorful output, file type icons, and more
 brew "lsd"
+# Powerful, lightweight programming language
+brew "lua"
 # Text-based web browser
 brew "lynx"
+# Real-time data compression library
+brew "lzo"
 # Utility for directing compilation
 brew "make"
 # Java-based project management
@@ -379,61 +346,78 @@ brew "memcached"
 brew "mermaid-cli"
 # Polyglot runtime manager (asdf rust clone)
 brew "mise"
-brew "usage"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.13"
 # Cross platform, open source .NET development framework
 brew "mono"
-# Protocol buffers (Google's data interchange format)
-brew "protobuf"
 # Remote terminal application
 brew "mosh"
 # Powerful paging program
 brew "most"
+# C library for multiple-precision floating-point computations
+brew "mpfr"
 # 'traceroute' and 'ping' in a single tool
 brew "mtr"
 # Tail multiple files in one terminal simultaneously
 brew "multitail"
-# Incremental parsing library
-brew "tree-sitter"
+# Text-based UI library
+brew "ncurses"
 # Ambitious Vim-fork focused on extensibility and agility
 brew "neovim", args: ["HEAD"]
+# Image manipulation
+brew "netpbm"
+# Low-level cryptographic library
+brew "nettle"
 # HTTP/2 C Library
 brew "nghttp2"
 # Port scanning utility for large networks
 brew "nmap"
+# New GNU portable threads library
+brew "npth"
 # Manage multiple Node.js versions
 brew "nvm"
 # Simple CLI for interacting with Google oauth tokens
 brew "oauth2l"
 # Command-line Git information tool
 brew "onefetch"
+# Regular expressions library
+brew "oniguruma"
 # Audio codecs extracted from Android open source project
 brew "opencore-amr"
-# Terminal multiplexer
-brew "tmux"
+# Library for JPEG-2000 image manipulation
+brew "openjpeg"
+# Audio codec
+brew "opus"
 # Process manager for Procfile-based applications and tmux
 brew "overmind"
+# Library to load and enumerate PKCS#11 modules
+brew "p11-kit"
 # Swiss-army knife of markup format conversion
 brew "pandoc"
 # Perl compatible regular expressions library
 brew "pcre"
+# Perl compatible regular expressions library with a new API
+brew "pcre2"
 # ProjectDiscovery's Open Source Tool Manager
 brew "pdtm"
 # Highly capable, feature-rich programming language
 brew "perl"
 # CLI for Postgres with auto-completion and syntax highlighting
 brew "pgcli"
+# Passphrase entry dialog utilizing the Assuan protocol
+brew "pinentry"
 # Python dependency management tool
 brew "pipenv"
 # Execute binaries from Python packages in isolated environments
 brew "pipx"
+# Low-level library for pixel manipulation
+brew "pixman"
 # Package compiler and linker metadata toolkit
 brew "pkgconf"
 # Command-line shell and scripting language
 brew "powershell"
 # Code formatter for JavaScript, CSS, JSON, GraphQL, Markdown, YAML
 brew "prettier"
+# Protocol buffers (Google's data interchange format)
+brew "protobuf"
 # Parallel versions of OpenSSH and related tools
 brew "pssh"
 # Show ps output as a tree
@@ -442,12 +426,14 @@ brew "pstree"
 brew "pyenv"
 # Tab completion for Python argparse
 brew "python-argcomplete"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.13"
 # File browser
 brew "ranger"
-# Install various Ruby versions and implementations
-brew "ruby-build"
 # Ruby version manager
 brew "rbenv"
+# Library for command-line editing
+brew "readline"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
 # Readline wrapper: adds readline support to tools that lack it
@@ -458,6 +444,14 @@ brew "rsync"
 brew "rtmpdump"
 # Audio time stretcher tool and library
 brew "rubberband"
+# Powerful, clean, object-oriented scripting language
+brew "ruby"
+# Install various Ruby versions and implementations
+brew "ruby-build"
+# Command-line tool for S3 and Cloud Storage
+brew "s5cmd"
+# SDL2 compatibility layer that uses SDL3 behind the scenes
+brew "sdl2-compat"
 # Static analysis and lint tool, for (ba)sh scripts
 brew "shellcheck"
 # Advanced console-based IP subnet calculator
@@ -498,6 +492,12 @@ brew "theora"
 brew "tig"
 # Simplified and community-driven man pages
 brew "tldr"
+# Terminal multiplexer
+brew "tmux"
+# Display directories as trees (with optional color/HTML output)
+brew "tree"
+# Incremental parsing library
+brew "tree-sitter"
 # Parser generator tool
 brew "tree-sitter-cli"
 # Incremental parsing library
@@ -508,20 +508,30 @@ brew "unbound"
 brew "universal-ctags"
 # ODBC 3 connectivity for UNIX
 brew "unixodbc"
+# Tool for working with usage-spec CLIs (used by mise completions)
+brew "usage"
 # Vi 'workalike' with many additional features
 brew "vim"
 # Pager/text based browser
 brew "w3m"
 # Executes a program periodically, showing output fullscreen
 brew "watch"
+# Image format providing lossless and lossy compression for web images
+brew "webp"
 # Internet file retriever
 brew "wget"
 # Port of OpenAI's Whisper model in C/C++
 brew "whisper.cpp"
 # Network analyzer and capture tool - without graphical user interface
 brew "wireshark"
+# H.264/AVC encoder
+brew "x264"
+# H.265/HEVC encoder
+brew "x265"
 # High-performance, high-quality MPEG-4 video library
 brew "xvid"
+# General-purpose data compression with high compression ratio
+brew "xz"
 # Language Server for Yaml Files
 brew "yaml-language-server"
 # Extensible command-line tool to format YAML files
@@ -544,6 +554,8 @@ brew "zoxide"
 brew "zsh"
 # Fish shell like syntax highlighting for zsh
 brew "zsh-syntax-highlighting"
+
+# --- Formulae from third-party taps ---
 # CLI for the Chainguard Platform
 brew "chainguard-dev/tap/chainctl"
 # The easiest way to access your cloud.
@@ -560,15 +572,35 @@ brew "guessi/tap/eks-ami-finder", trusted: true
 brew "kdash-rs/kdash/kdash", trusted: true
 # Incredibly fast JavaScript runtime, bundler, transpiler and package manager - all in one.
 brew "oven-sh/bun/bun", trusted: true
+
+# --- Casks ---
+# Command-line interface for 1Password
+cask "1password-cli"
+# Microsoft Azure
+cask "azure-cli", trusted: true
 # Terminal-based AI coding assistant
 cask "claude-code"
 # Brings the power of Copilot coding agent directly to your terminal
 cask "copilot-cli"
-# Command-line interface for 1Password
-cask "1password-cli"
-# Hugging Face command-line interface
-brew "hf"
+
+# --- kubectl plugins (krew) ---
+krew "cert-manager"
+krew "cnpg"
+krew "explore"
+krew "get-all"
+krew "node-shell"
+krew "pod-lens"
+krew "pod-shell"
+krew "stern"
+krew "tail"
+krew "tree"
+
 {{- if eq .chezmoi.os "darwin" }}
+
+# --- Taps ---
+tap "home-operations/tap"
+
+# --- Formulae ---
 # Mac App Store command-line interface
 brew "mas"
 # Reattach process (e.g., tmux) to background
@@ -577,19 +609,21 @@ brew "reattach-to-user-namespace"
 brew "telnet"
 # CLI tool that moves files or folder to the trash
 brew "trash"
-tap "home-operations/tap"
-# Render and diff Flux GitOps repositories offline, without a cluster
-cask "home-operations/tap/flate", trusted: true
+
+# --- Casks ---
 cask "font-fira-code"
 cask "font-fira-code-nerd-font"
 cask "font-fira-mono"
 cask "font-jetbrains-mono-nerd-font"
 # Set of tools to manage resources and applications hosted on Google Cloud
 cask "gcloud-cli"
+# Render and diff Flux GitOps repositories offline, without a cluster
+cask "home-operations/tap/flate", trusted: true
 cask "powershell"
 # Menu bar manager
 cask "thaw"
-# MacOS Packages
+
+# --- Mac App Store apps ---
 mas "1Password for Safari", id: 1569813296
 mas "Amphetamine", id: 937984704
 mas "Brother iPrint&Scan", id: 1193539993
@@ -602,23 +636,15 @@ mas "reMarkable", id: 1276493162
 mas "Scratchpad", id: 6504040051
 mas "Slack", id: 803453959
 mas "SnippetsLab", id: 1006087419
+mas "Todoist", id: 585829637
 mas "Triode", id: 1450027401
 {{- end }}
 
 {{- if eq .chezmoi.os "linux" }}
+
+# --- Formulae ---
 # Dependency of other Linux formulae
 brew "node"
 # freedesktop.org trashcan CLI — Linux equivalent of macOS's `trash`
 brew "trash-cli"
 {{- end }}
-
-krew "cert-manager"
-krew "cnpg"
-krew "explore"
-krew "get-all"
-krew "node-shell"
-krew "pod-lens"
-krew "pod-shell"
-krew "stern"
-krew "tail"
-krew "tree"
