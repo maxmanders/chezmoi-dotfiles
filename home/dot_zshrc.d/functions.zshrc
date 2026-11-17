@@ -336,8 +336,10 @@ _wt_feature_names() {
   done
 }
 
+# No `emulate -L zsh` here: it clobbers the options the completion system
+# sets up (_comp_options), and _describe then matches nothing once a prefix
+# has been typed.
 _wt_feature_completion() {
-  emulate -L zsh
   local -a features
   features=(${(f)"$(_wt_feature_names)"})
   (( $#features )) && _describe 'feature worktree' features
