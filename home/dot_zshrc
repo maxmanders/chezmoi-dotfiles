@@ -38,6 +38,9 @@ fi
 zinit ice blockf
 zinit light zsh-users/zsh-completions
 
+# _git-wt's `emulate -L zsh` drops extendedglob, which breaks _describe
+# prefix matching (e.g. `wt cd feat/<Tab>` beeps instead of listing)
+zinit ice atclone"sed -i.bak 's/emulate -L zsh\$/emulate -L zsh -o extendedglob/' completions/_git-wt" atpull"%atclone"
 zinit light fingergohappy/git-wt
 ###############################################################################
 
