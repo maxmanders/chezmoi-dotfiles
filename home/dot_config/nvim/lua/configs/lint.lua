@@ -20,7 +20,7 @@ lint.linters.yamllint = vim.tbl_extend("force", lint.linters.yamllint, {
 lint.linters.yamllint_chart = vim.tbl_extend("force", lint.linters.yamllint, {
   args = {
     "-d",
-    "{extends: default, rules: {line-length: disable, empty-lines: {max-end: false}}}",
+    "{extends: default, rules: {line-length: disable, document-start: disable, empty-lines: {max-end: false}}}",
     "--format",
     "parsable",
     "-",
