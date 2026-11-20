@@ -396,6 +396,10 @@ return {
     cmd = "CodeDiff",
   },
   {
+    "sindrets/diffview.nvim",
+    cmd = { "DiffviewOpen", "DiffviewClose", "DiffviewToggleFiles", "DiffviewFocusFiles", "DiffviewFileHistory" },
+  },
+  {
     "mason-org/mason-lspconfig.nvim",
     opts = {},
     dependencies = {
