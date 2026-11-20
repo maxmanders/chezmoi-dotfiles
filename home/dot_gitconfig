@@ -57,8 +57,6 @@
   prune = true
 [rebase]
   autoStash = true
-[rerere]
-  enabled = true
 [commit]
   gpgsign = true
 [user]
