@@ -10,6 +10,19 @@ local options = {
         return require("util.ruff").find(ctx.dirname)
       end,
     },
+    -- yamlfmt can only always add or always strip the leading "---", so keep
+    -- whatever the file already has
+    yamlfmt = {
+      prepend_args = function(_, ctx)
+        for _, line in ipairs(vim.api.nvim_buf_get_lines(ctx.buf, 0, -1, false)) do
+          if not line:match "^%s*$" and not line:match "^%s*#" then
+            local present = line:match "^%-%-%-" ~= nil
+            return { "-formatter", "include_document_start=" .. tostring(present) }
+          end
+        end
+        return {}
+      end,
+    },
   },
 
   formatters_by_ft = {
