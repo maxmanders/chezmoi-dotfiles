@@ -361,3 +361,55 @@ tmux-reload-zshrc() {
     [[ "${cmd}" == zsh ]] && tmux send-keys -t "${pane}" C-u ' source ~/.zshrc' Enter
   done
 }
+
+# Run `terragrunt plan` with the log noise stripped, for sharing in PRs.
+# -m wraps the plan in a collapsible Markdown diff block and copies it to the
+# clipboard. Other args go to `terragrunt plan`, which handles its own flags
+# (e.g. --source) and forwards the rest (e.g. -target=...) to terraform.
+tgplan() {
+  emulate -L zsh
+  setopt local_options pipe_fail
+
+  local markdown=0
+  if [[ "$1" == "-m" ]]; then
+    markdown=1
+    shift
+  fi
+
+  local plan rc
+  plan=$(
+    terragrunt plan --tf-forward-stdout --no-color --non-interactive --log-level error \
+      -compact-warnings "$@" 2>&1 \
+    | sed -E \
+        -e $'s/\x1b\\[[0-9;]*m//g' \
+        -e 's/^[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{3} +(STDOUT|STDERR) +(terraform|tofu): //' \
+    | rg --no-config --invert-match ': (Refreshing state\.\.\.|Reading\.\.\.|Still reading\.\.\.|Read complete after)' \
+    | sed -E \
+        -e '/^─+$/d' \
+        -e "/^Note: You didn't use the -out option/,/^\$/d" \
+        -e '/./,$!d'
+  )
+  rc=$?
+
+  if (( ! markdown )); then
+    print -r -- "${plan}"
+    return "${rc}"
+  fi
+
+  local unit summary
+  unit="${PWD#$(git rev-parse --show-toplevel 2>/dev/null)/}"
+  summary=$(print -r -- "${plan}" | rg --no-config --max-count 1 '^(Plan:|No changes\.|Error:)')
+
+  # Move the +/-/~ markers to column 0 so GitHub's diff highlighting applies
+  {
+    print -r -- "<details><summary><code>${unit}</code>: ${summary:-plan output}</summary>"
+    print
+    print -r -- '```diff'
+    print -r -- "${plan}" | sed -E 's/^( +)(-\/\+|\+\/-|[-+~]) /\2\1 /'
+    print -r -- '```'
+    print
+    print -r -- '</details>'
+  } | tee >(pbcopy)
+
+  return "${rc}"
+}
